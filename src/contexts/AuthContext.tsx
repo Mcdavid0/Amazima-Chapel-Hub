@@ -38,8 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return null;
   }, []);
 
+  // Initial session check
   useEffect(() => {
     let mounted = true;
+
     const init = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!mounted) return;
@@ -50,7 +52,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
       setInitialLoad(false);
     };
+
     init();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (!mounted) return;
       setUser(session?.user ?? null);
@@ -60,6 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setProfile(null);
       }
     });
+
     return () => {
       mounted = false;
       subscription.unsubscribe();
@@ -68,7 +73,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
     if (error) {
+      // Check if email is not confirmed
       if (error.message.includes('Email not confirmed')) {
         return { error: 'Please check your email and confirm your account before signing in.', needsConfirmation: true };
       }
@@ -77,13 +84,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       return { error: error.message };
     }
+
+    // Wait for profile to be fetched before resolving
     if (data.user) {
       const prof = await fetchProfile(data.user.id);
+
+      // If profile doesn't exist yet (race condition with trigger), retry once
       if (!prof) {
         await new Promise(r => setTimeout(r, 1500));
         await fetchProfile(data.user.id);
       }
     }
+
     return {};
   };
 
@@ -115,7 +127,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const role = profile?.role ?? null;
-  const isAdmin = role === 'super_admin' || role === 'admin';
+  const isAdmin = role === 'admin';
 
   return (
     <AuthContext.Provider
