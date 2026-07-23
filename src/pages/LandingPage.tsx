@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
-import { Church, ArrowRight, Users, Music, Heart, Calendar } from 'lucide-react';
+import { ArrowRight, Users, Music, Heart, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+
+const logoSrc = '/logo.png';
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-navy-950 flex flex-col">
-      <!-- Navigation -->
+      {/* Navigation */}
       <header className="sticky top-0 z-50 border-b border-navy-100/50 dark:border-navy-800/50 bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center">
-              <Church className="w-5 h-5 text-white" />
-            </div>
+            <img src={logoSrc} alt="Amazima School" className="h-8 w-auto" />
             <span className="font-bold text-navy-900 dark:text-white">Amazima Chapel Hub</span>
           </div>
           <div className="flex items-center gap-3">
@@ -25,14 +25,14 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <!-- Hero -->
+      {/* Hero */}
       <section className="flex-1 flex flex-col items-center justify-center px-6 py-20 text-center max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-50 dark:bg-gold-900/20 text-gold-700 dark:text-gold-300 text-sm font-medium mb-8">
-          <Church className="w-4 h-4" />
-          Growing Together in Christ
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cream-100 dark:bg-cream-700/20 text-navy-700 dark:text-cream-300 text-sm font-medium mb-8">
+          <img src={logoSrc} alt="TAS" className="h-4 w-auto" />
+          The Amazima School
         </div>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-900 dark:text-white tracking-tight leading-tight mb-6">
-          Your Chapel, {' '}
+          Your Chapel,{' '}
           <span className="text-gold-500">Connected</span>
         </h1>
         <p className="text-lg text-navy-500 dark:text-navy-400 max-w-2xl mb-10 leading-relaxed">
@@ -50,7 +50,7 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        <!-- Feature pills -->
+        {/* Feature pills */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 w-full max-w-3xl">
           {[
             { icon: Users, label: 'Groups' },
