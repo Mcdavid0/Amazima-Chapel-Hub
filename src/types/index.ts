@@ -2,7 +2,7 @@
 // AMAZIMA CHAPEL HUB - TYPE DEFINITIONS
 // ================================================
 
-export type UserRole = 'super_admin' | 'admin' | 'group_leader' | 'student';
+export type UserRole = 'admin' | 'group_leader' | 'student';
 export type AttendanceStatus = 'present' | 'absent' | 'late' | 'excused';
 export type ApplicationStatus = 'pending' | 'approved' | 'declined';
 export type FeedbackStatus = 'open' | 'in_progress' | 'resolved' | 'closed';
@@ -11,6 +11,7 @@ export type EventType = 'service' | 'prayer_meeting' | 'choir_rehearsal' | 'yout
 export type NotificationType = 'announcement' | 'attendance' | 'application' | 'event' | 'song' | 'prayer_response' | 'feedback_reply' | 'group_assignment' | 'system';
 
 export interface Profile { id: string; user_id: string; first_name: string; last_name: string; email: string; role: UserRole; class?: string; house?: string; avatar_url?: string; phone?: string; bio?: string; notification_email: boolean; notification_in_app: boolean; theme: string; is_active: boolean; last_login?: string; created_at: string; updated_at: string; }
+
 export interface Group { id: string; name: string; description?: string; leader_id?: string; max_members: number; is_active: boolean; created_at: string; updated_at: string; }
 export interface GroupMember { id: string; group_id: string; student_id: string; joined_at: string; }
 export interface Attendance { id: string; student_id: string; marked_by: string; date: string; status: AttendanceStatus; notes?: string; service_type: EventType; created_at: string; updated_at: string; }
